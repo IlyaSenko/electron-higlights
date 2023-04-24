@@ -1,25 +1,37 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useCallback } from "react";
+import Browser from "./components/Browser";
+import HighlightsList from "./components/HighlightsList";
+import useHighlights, { IHighlight } from "./hooks/useHighlights";
 
-function App() {
+function App(): JSX.Element {
+  const [highlights, setHighlights] = useHighlights();
+
+  const handleAddHighlight = useCallback(
+    (newHighlight: IHighlight) => {
+      setHighlights([...highlights, newHighlight]);
+    },
+    [highlights, setHighlights]
+  );
+
+  const handleDeleteHighlight = useCallback(
+    (id: string) => {
+      const newHighlights = highlights.filter(
+        (highlight) => highlight.id !== id
+      );
+
+      setHighlights(newHighlights);
+    },
+    [highlights, setHighlights]
+  );
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <HighlightsList
+        highlights={highlights}
+        deleteHighlight={handleDeleteHighlight}
+      />
+      <Browser addHighlight={handleAddHighlight} />
+    </>
   );
 }
 

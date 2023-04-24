@@ -1,0 +1,21 @@
+.form {
+  position: absolute;
+  right: 40px;
+  top: 40px;
+
+  input {
+    width: 307px;
+  }
+}
+
+.saveButton {
+  position: absolute;
+  right: 150px;
+  top: 560px;
+  z-index: 100;
+  display: none;
+
+  &.shown {
+    display: block;
+  }
+}
